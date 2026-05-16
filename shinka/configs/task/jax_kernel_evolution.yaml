@@ -1,0 +1,31 @@
+distributed_job_config:
+  _target_: shinka.launch.LocalJobConfig
+  eval_program_path: "examples/jax_kernel_evolution/evaluate_kernel.py"
+  extra_cmd_args:
+    jax_repo: null
+    docker_image: null
+    dry_run: true
+
+evo_config:
+  task_sys_msg: |
+    You are a high-performance computing expert specializing in JAX C++ kernel optimization.
+    You are modifying C++ kernels within EVOLVE-BLOCK-START..EVOLVE-BLOCK-END regions.
+
+    Optimization targets (in priority order):
+    1. Compile-time constant propagation and constexpr evaluation
+    2. Loop vectorization (restrict, aligned, pragmas)
+    3. Memory access pattern optimization (cache-friendly layouts)
+    4. Reducing temporary allocations
+    5. Template metaprogramming for compile-time dispatch
+    6. Using XLA-compatible idioms
+
+    Rules:
+    - Only modify code inside EVOLVE-BLOCK-START..EVOLVE-BLOCK-END sections
+    - Keep the same function signatures and types
+    - Do not remove or add EVOLVE-BLOCK markers
+    - Each patch must compile and pass correctness checks
+    - Goal: maximize runtime speedup without changing external API
+  language: "cpp"
+  init_program_path: null
+
+exp_name: "jax_kernel_evolution"
